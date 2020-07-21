@@ -36,6 +36,6 @@ When the algorithm is done the calculated shortest path will be displayed betwee
 
 ## Inspiration
 The inspiration for this application is based on:
-- The game skeleton, presented by: [KidsCanCode.org](https://www.youtube.com/channel/UCNaPQ5uLX5iIEHUCLmfAgKg9 Youtube channel.
+- The game skeleton, presented by: [KidsCanCode.org](https://www.youtube.com/channel/UCNaPQ5uLX5iIEHUCLmfAgKg9) Youtube channel.
 - Visualization of A* algorithm by [TechWithTim](https://www.youtube.com/channel/UC4JX40jDee_tINbkjycV4Sg) Youtube channel.
 - Project structure based on instructions in the book: [Python The Hard Way](https://learncodethehardway.org/python/)
