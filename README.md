@@ -24,7 +24,7 @@ The currently chosen algorithm is displayed in the top right corner in blue text
 ## How to start the application
 Download a copy of the repository into a folder. Navigate and enter folder. In Command Prompt type:
 
-- python -m path-finding
+- python -m path_finding
 
 This will start the game and game will launch in a separate window. 'ESC' or pressing the 'x' at top right can be used to exit the application at any time.
 
