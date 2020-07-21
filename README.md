@@ -28,6 +28,12 @@ Download a copy of the repository into a folder. Navigate and enter folder. In C
 
 This will start the game and game will launch in a separate window. 'ESC' or pressing the 'x' at top right can be used to exit the application at any time.
 
+## How the algorithms are visualized
+The Start Node is marked as Green, the End Node as Purple and the Walls are marked as Black.
+Any node waiting to be considered, currently in the 'open set', is marked as Yellow.
+When a node has been considered and shortest distance found then the node is marked as Turquoise.
+When the algorithm is done the calculated shortest path will be displayed between the Start and End Node. The nodes in the shortest path will be marked as Red.
+
 ## Inspiration
 The inspiration for this application is based on:
 - The game skeleton, presented by: [KidsCanCode.org](https://www.youtube.com/channel/UCNaPQ5uLX5iIEHUCLmfAgKg9 Youtube channel.
