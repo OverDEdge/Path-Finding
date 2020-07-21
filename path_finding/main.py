@@ -1,10 +1,14 @@
 import pygame as pg
 import math
 import sys
+import os
 
 from .node import Node
 from . import astar
+from . import dijkstras
 from . import settings
+
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (settings.WINDOW_X_POS, settings.WINDOW_Y_POS)
 
 class Game:
     def __init__(self):
@@ -13,7 +17,8 @@ class Game:
         '''
         # Intialize game window, etc...
         self.running_program = True
-        self.algo = astar
+        self.algo = dijkstras
+        self.algo_name = 'dijkstras'
         pg.init()
         pg.mixer.init()
         self.screen = pg.display.set_mode((settings.WIDTH, settings.HEIGHT))
@@ -30,25 +35,13 @@ class Game:
         self.start = None
         self.end = None
         self.algo_results = False, None
+        # Initialize the nodes
         for row in range(settings.ROWS):
             self.grid.append([])
             for col in range(settings.COLS):
                 node = Node(row, col, settings.NODE_WEIGHT, self)
                 self.grid[row].append(node)
         self.run()
-
-    def draw_grid(self):
-        '''
-        Draws the grid for visualization purpose
-        '''
-
-        # Vertical lines
-        for x in range(settings.COLS):
-            pg.draw.line(self.screen, settings.GREY, (x * settings.NODE_SIZE, 0), (x  * settings.NODE_SIZE, settings.HEIGHT))
-
-        # Horizontal lines
-        for y in range(settings.ROWS):
-            pg.draw.line(self.screen, settings.GREY, (0, y  * settings.NODE_SIZE), (settings.WIDTH, y  * settings.NODE_SIZE))
 
     def update(self):
         '''
@@ -78,6 +71,17 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
+
+                # Set A* algorithm
+                if event.key == pg.K_a:
+                    self.algo = astar
+                    self.algo_name = 'astar'
+
+                # Set Dijkstra algorithm
+                if event.key == pg.K_d:
+                    self.algo = dijkstras
+                    self.algo_name = 'dijkstras'
+
                 # Check if algorithm shall start
                 if event.key == pg.K_SPACE and self.start and self.end:
                     # Set neighbours according to current grid status
@@ -148,12 +152,26 @@ class Game:
         '''
         Method to draw all sprites to screen
         '''
-        pg.display.set_caption("{:.2f}".format(self.clock.get_fps()))
+        #pg.display.set_caption("{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(settings.BGCOLOR)
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, sprite.pos)
         self.draw_grid()
+        self.draw_text(settings.ALGORITM_NAME[self.algo_name], settings.MEDIUM_TEXT_SIZE, settings.BLUE, settings.WIDTH - 100, 10)
         pg.display.flip()
+
+    def draw_grid(self):
+        '''
+        Draws the grid for visualization purpose
+        '''
+
+        # Vertical lines
+        for x in range(settings.COLS):
+            pg.draw.line(self.screen, settings.GREY, (x * settings.NODE_SIZE, 0), (x  * settings.NODE_SIZE, settings.HEIGHT))
+
+        # Horizontal lines
+        for y in range(settings.ROWS):
+            pg.draw.line(self.screen, settings.GREY, (0, y  * settings.NODE_SIZE), (settings.WIDTH, y  * settings.NODE_SIZE))
 
     def draw_text(self, text, size, color, x, y):
         '''
@@ -173,7 +191,9 @@ class Game:
             self.reconstruct_path(self.algo_results[1])
             self.draw_text(settings.PATH_FOUND, settings.LARGE_TEXT_SIZE, settings.BLUE, settings.WIDTH / 2, settings.HEIGHT / 2)
         else: # If path was not found
-            self.draw_text(settings.NO_PATH_FOUND, settings.LARGE_TEXT_SIZE, settings.BLACK, settings.WIDTH / 2, settings.HEIGHT / 2)
+            self.draw_text(settings.NO_PATH_FOUND, settings.LARGE_TEXT_SIZE, settings.BLUE, settings.WIDTH / 2, settings.HEIGHT / 2)
+
+        self.draw_text(settings.GOSCREEN_PRESS_ANY, settings.LARGE_TEXT_SIZE, settings.RED, settings.WIDTH / 2, settings.HEIGHT * 3 / 4)
 
         pg.display.flip()
         self.wait_for_key()
@@ -202,8 +222,25 @@ class Game:
                     waiting = False
 
     def launch_start_screen(self):
-        # Start screen
-        pass
+        '''
+        Method that runs at the start to display information
+        '''
+
+        self.screen.fill(settings.BGCOLOR)
+        self.draw_grid()
+
+        self.draw_text(settings.STARTSCREEN_MOUSE_INSTRUCTION_1, settings.LARGE_TEXT_SIZE, settings.WHITE, settings.WIDTH / 2, settings.HEIGHT * 4 / 48)
+        self.draw_text(settings.STARTSCREEN_MOUSE_INSTRUCTION_2, settings.LARGE_TEXT_SIZE, settings.WHITE, settings.WIDTH / 2, settings.HEIGHT * 8 / 48)
+        self.draw_text(settings.STARTSCREEN_MOUSE_INSTRUCTION_3, settings.LARGE_TEXT_SIZE, settings.WHITE, settings.WIDTH / 2, settings.HEIGHT * 12 / 48)
+
+        self.draw_text(settings.STARTSCREEN_START_ALGORITHM, settings.LARGE_TEXT_SIZE, settings.GREEN, settings.WIDTH / 2, settings.HEIGHT * 20 / 48)
+        self.draw_text(settings.STARTSCREEN_START_CHOOSE_ALGORITHM_1, settings.LARGE_TEXT_SIZE, settings.GREEN, settings.WIDTH / 2, settings.HEIGHT * 24 / 48)
+        self.draw_text(settings.STARTSCREEN_START_CHOOSE_ALGORITHM_2, settings.LARGE_TEXT_SIZE, settings.GREEN, settings.WIDTH / 2, settings.HEIGHT * 28 / 48)
+
+        self.draw_text(settings.STARTSCREEN_PRESS_ANY, settings.LARGE_TEXT_SIZE, settings.RED, settings.WIDTH / 2, settings.HEIGHT * 36 / 48)
+
+        pg.display.flip()
+        self.wait_for_key()
 
     def quit(self):
         '''

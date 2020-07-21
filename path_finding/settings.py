@@ -5,6 +5,9 @@ vec = pg.math.Vector2
 
 WIDTH = 1200
 HEIGHT = 720
+TITLE_AREA = 50
+WINDOW_X_POS = 50
+WINDOW_Y_POS = 50
 FPS = 60
 NODE_SIZE = 20
 
@@ -33,5 +36,16 @@ NODE_WEIGHT = 1
 # Text Prompts
 FONT_NAME = 'arial'
 LARGE_TEXT_SIZE = 40
-NO_PATH_FOUND = "No valid path found. Press any KEY to clear screen and restart"
-PATH_FOUND = "Path found. Press any KEY to clear screen and restart"
+MEDIUM_TEXT_SIZE = 25
+SMALL_TEXT_SIZE = 15
+NO_PATH_FOUND = "No valid path found!"
+PATH_FOUND = "Path found! See colored path!"
+GOSCREEN_PRESS_ANY = "Press any KEY to clear screen and restart"
+ALGORITM_NAME = {'dijkstras': "Dijkstra's Algorithm", 'astar': "A* Algorithm"}
+STARTSCREEN_MOUSE_INSTRUCTION_1 = "Use Left Mouse-click to place out Start, End and Walls"
+STARTSCREEN_MOUSE_INSTRUCTION_2 = "First click places Start, second places End, and following places Walls"
+STARTSCREEN_MOUSE_INSTRUCTION_3 = "To clear a node use Right Mouse-click on node position"
+STARTSCREEN_START_ALGORITHM = "Press 'Space' to start the chose path-finding algorithm"
+STARTSCREEN_START_CHOOSE_ALGORITHM_1 = "Press 'A' for A* Algorithm"
+STARTSCREEN_START_CHOOSE_ALGORITHM_2 = "Press 'D' for Dijkstra's Algorithm"
+STARTSCREEN_PRESS_ANY = "Press any KEY to continue to path-finding game"
